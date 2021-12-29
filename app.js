@@ -1,6 +1,8 @@
-const express = require('express')
-const logger = require('morgan')
-const cors = require('cors')
+const express = require('express');
+const logger = require('morgan');
+const cors = require('cors');
+const dotenv = require("dotenv");
+dotenv.config();
 
 const contactsRouter = require('./routes/api/contacts')
 
@@ -24,3 +26,4 @@ app.use((err, req, res, next) => {
 })
 
 module.exports = app
+
