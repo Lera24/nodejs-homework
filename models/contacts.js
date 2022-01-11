@@ -16,6 +16,10 @@ const productSchema = Schema({
       type: Boolean,
       default: false,
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    }
 });
 
 const joiSchema = Joi.object({
