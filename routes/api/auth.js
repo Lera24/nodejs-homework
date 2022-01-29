@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const gravatar = require("gravatar");
 
 const { User } = require('../../models/user');
 const { joiRegisterSchema, joiLoginSchema } = require('../../models/user');
@@ -20,6 +21,14 @@ router.post('/signup', async(req, resp, next) => {
         if(user){
             throw new Conflict("User already exist");
         }
+        const avatarURL = gravatar.url(email);
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(password, salt);
+        const newUser = await User.create({password: hashPassword, email, subscription, avatarURL});
+        resp.status(201).json({
+            email: newUser.email,
+            subscription: newUser.subscription,
+            avatarURL: newUser.avatarURL
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
         const newUser = await User.create({password: hashPassword, email, subscription});
