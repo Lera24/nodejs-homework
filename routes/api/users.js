@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs/promises");
 
 const avatarsDir = path.join(__dirname, "../../", "public", "avatars");
+const { authenticate } = require('../../middlewares');
 
 router.get("/logout", authenticate, async (req, res) => {
     const {_id} = req.user;

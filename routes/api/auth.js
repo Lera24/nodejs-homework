@@ -29,6 +29,12 @@ router.post('/signup', async(req, resp, next) => {
             email: newUser.email,
             subscription: newUser.subscription,
             avatarURL: newUser.avatarURL
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(password, salt);
+        const newUser = await User.create({password: hashPassword, email, subscription});
+        resp.status(201).json({
+            email: newUser.email,
+            subscription: newUser.subscription
         })
     } catch (error) {
         next(error);
